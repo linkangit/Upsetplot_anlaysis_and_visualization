@@ -1,6 +1,7 @@
 # UpSet Analysis of Simulated Differential Gene Expression
 ### Example Upset Plot
 ![Upset_plot](Upset_plot.png)
+
 This repository provides a Python script to simulate differential gene expression data across multiple samples, prepare the data for UpSet analysis, export intersection tables, and visualize overlaps using an UpSet plot.
 
 ---
@@ -8,6 +9,51 @@ This repository provides a Python script to simulate differential gene expressio
 ## Overview
 
 UpSet plots are a powerful way to visualize intersections between multiple sets, such as genes up- or down-regulated across different experimental conditions. This script demonstrates the complete workflow, from data simulation to visualization and export.
+
+---
+
+## Example Input DataFrame Structure
+
+The script expects a DataFrame where **each row represents a gene and the set it belongs to** (e.g., up/down-regulated in a sample). This is the structure used for UpSet analysis.
+
+|   gene   |      set       |
+|:--------:|:--------------:|
+|  GENE123 | Sample_1_up    |
+|  GENE456 | Sample_1_up    |
+|  GENE789 | Sample_1_up    |
+|  GENE123 | Sample_2_down  |
+|  GENE555 | Sample_3_up    |
+|  GENE789 | Sample_2_up    |
+|  GENE789 | Sample_3_down  |
+|   ...    |     ...        |
+
+- **gene**: Gene symbol or identifier.
+- **set**: The set this gene belongs to (combination of sample and regulation, e.g., `Sample_1_up`, `Sample_2_down`).
+
+### How to Create This DataFrame with Your Own Data
+
+If you have your own gene lists, you can construct this DataFrame as follows:
+
+```python
+import pandas as pd
+
+# Example: Suppose you have these gene lists
+sample_1_up = ['GENE123', 'GENE456', 'GENE789']
+sample_2_down = ['GENE123', 'GENE999']
+sample_3_up = ['GENE555']
+
+# Build the DataFrame
+all_sets = []
+for gene in sample_1_up:
+    all_sets.append({'gene': gene, 'set': 'Sample_1_up'})
+for gene in sample_2_down:
+    all_sets.append({'gene': gene, 'set': 'Sample_2_down'})
+for gene in sample_3_up:
+    all_sets.append({'gene': gene, 'set': 'Sample_3_up'})
+
+df = pd.DataFrame(all_sets)
+print(df)
+```
 
 ---
 
